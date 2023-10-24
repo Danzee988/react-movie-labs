@@ -62,6 +62,17 @@
    });
   };
 
+  export const getMovieReviews = (id) => {
+    return fetch(
+      `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${process.env.REACT_APP_TMDB_KEY}`
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        // console.log(json.results);
+        return json.results;
+      });
+  };
+
   // const apiKey = 'YOUR_API_KEY'; // Replace with your actual API key
 // const apiUrl = `https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=en-US&page=1`;
 
