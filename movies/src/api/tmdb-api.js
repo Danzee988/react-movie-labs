@@ -40,3 +40,19 @@ export const getMovies = () => {
         return json.results;
       });
   };
+
+  // const apiKey = 'YOUR_API_KEY'; // Replace with your actual API key
+// const apiUrl = `https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=en-US&page=1`;
+
+// const options = { method: 'GET', headers: { accept: 'application/json' } };
+
+export const getUpcomingMovies = () => {
+  return fetch(`https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1`)
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`Failed to fetch upcoming movies: ${res.status}`);
+      }
+      return res.json();
+    })
+    .then((json) => json.results);
+};
