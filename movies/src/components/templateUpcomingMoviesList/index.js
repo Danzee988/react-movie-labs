@@ -4,12 +4,13 @@ import FilterCard from "../filterMoviesCard";
 import MovieList from "../movieList";
 import Grid from "@mui/material/Grid";
 
-function MovieListPageTemplate({ upcomingMovies, title, selectFavorite }) {
+function UpcomingMoviesListTemplate({ upcomingMovies, title, action }) {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
   const genreId = Number(genreFilter);
+  console.log("inside template ", upcomingMovies)
 
-  let displayedMovies = upcomingMovies // Use upcomingMovies here
+  let displayedMovies = upcomingMovies
     .filter((m) => {
       return m.title.toLowerCase().search(nameFilter.toLowerCase()) !== -1;
     })
@@ -35,10 +36,10 @@ function MovieListPageTemplate({ upcomingMovies, title, selectFavorite }) {
             genreFilter={genreFilter}
           />
         </Grid>
-        <MovieList selectFavorite={selectFavorite} movies={displayedMovies}></MovieList>
+        <MovieList action={action} movies={displayedMovies}></MovieList>
       </Grid>
     </Grid>
   );
 }
 
-export default MovieListPageTemplate;
+export default UpcomingMoviesListTemplate;

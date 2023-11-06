@@ -5,6 +5,7 @@ export const MoviesContext = React.createContext(null);
 const MoviesContextProvider = (props) => {
   const [favorites, setFavorites] = useState( [] )
   const [myReviews, setMyReviews] = useState( {} ) 
+  const [watchList, setWatchList] = useState([]);
 
 
   const addToFavorites = (movie) => {
@@ -17,6 +18,11 @@ const MoviesContextProvider = (props) => {
     }
     setFavorites(newFavorites)
   };
+
+  const addToWatchList = (movie) => {
+    setWatchList([...watchList, movie]);
+    localStorage.setItem('watchList', JSON.stringify(watchList));
+ };
   
   // We will use this function in a later section
   const removeFromFavorites = (movie) => {
@@ -37,6 +43,8 @@ const MoviesContextProvider = (props) => {
         addToFavorites,
         removeFromFavorites,
         addReview,
+        watchList,
+        addToWatchList
       }}
     >
       {props.children}

@@ -1,27 +1,19 @@
-import React from "react";
+import React, {useState, useEffect}  from "react";
 import { useParams } from 'react-router-dom';
 import MovieDetails from "../components/movieDetails/";
 import PageTemplate from "../components/templateMoviePage";
-import { getMovie } from '../api/tmdb-api'
-import { useQuery } from "react-query";
-import Spinner from '../components/spinner'
-//import useMovie from "../hooks/useMovie";
+import { getMovie } from "../api/tmdb-api";
 
 const MoviePage = (props) => {
   const { id } = useParams();
-  const { data: movie, error, isLoading, isError } = useQuery(
-    ["movie", { id: id }],
-    getMovie
-  );
+  const [movie, setMovie] = useState(null);
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+  useEffect(() => {
+    getMovie(id).then((movie) => {
+      setMovie(movie);
+    });
+  }, [id]);
 
-  if (isError) {
-    return <h1>{error.message}</h1>;
-  }
-  
   return (
     <>
       {movie ? (

@@ -10,6 +10,7 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools';
 import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage'
+import SiteHeader from './components/siteHeader'
 import './homePage.css';
 
 const queryClient = new QueryClient({
@@ -22,44 +23,21 @@ const queryClient = new QueryClient({
   },
 });
 
-const SiteHeader = () => {
-  return (
-    <header className="navbar">
-      <nav>
-        <div className="header-content">
-          <span className="text1">TMDB Client</span>
-          <span className="text2">All you ever wanted to know about Movies!</span>
-          <ul>
-            <li>
-              <Link to="/">HOME</Link>
-            </li>
-            <li>
-              <Link to="/movies/favorites">FAVOURITE</Link>
-            </li>
-            <li>
-              <Link to="/movies/upcoming">UPCOMING</Link>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </header>
-  );
-};
-
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
+
       <BrowserRouter>
-        <SiteHeader /> {SiteHeader}
+        <SiteHeader />
         <MoviesContextProvider>
         <Routes>
+          <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
           <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
           <Route path="/movies/:id" element={<MoviePage />} />
-          <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
-          <Route path="/reviews/:id" element={<MovieReviewPage />} />
           <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
+          <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
           <Route path="/" element={<HomePage />} />
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="*" element={ <Navigate to="/" /> } />
         </Routes>
         </MoviesContextProvider>
       </BrowserRouter>

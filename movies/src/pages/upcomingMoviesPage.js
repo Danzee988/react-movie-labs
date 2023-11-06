@@ -1,28 +1,36 @@
-import React, { useState, useEffect } from "react";
-import PageTemplate from '../components/templateUpcomingMoviesList'
+import React from "react";
 import { getUpcomingMovies } from "../api/tmdb-api";
+import PageTemplate from '../components/templateUpcomingMoviesList';
+import { useQuery } from 'react-query';
+import Spinner from '../components/spinner';
+import AddToWatchListIcon from '../components/cardIcons/addToWatchList'
 
 const UpcomingMoviesPage = () => {
-  const [upcomingMovies, setUpcomingMovies] = useState([]);
 
+ const { data, error, isLoading, isError } = useQuery('upcoming', getUpcomingMovies)
+ if (isLoading) {
+    return <Spinner />
+ }
 
-  useEffect(() => {
-    getUpcomingMovies().then(movies => {
-      console.log("Upcoming Movies Data:", movies); // Log the fetched data
-      setUpcomingMovies(movies);
-    })
-    .catch((error) => {
-      console.error("Error fetching upcoming movies:", error); // Log any errors
-    });
-  }, []);
+ if (isError) {
+    return <h1>{error.message}</h1>
+ }  
+ const upcomingMovies = data.results;
+ console.log("upcoming movies ", data.results);
 
-  console.log("Upcoming Movies State:", upcomingMovies); // Log the state
+ // Redundant, but necessary to avoid app crashing.
+ const upcomingList = upcomingMovies.filter(m => m.upcomingList)
+ localStorage.setItem('upcomingList', JSON.stringify(upcomingList))
+ //const addToWatchList = (movieId) => true 
 
-  return (
+ return (
     <PageTemplate
-    title="Upcoming Movies"
-    movies={upcomingMovies}
+      upcomingMovies={upcomingMovies}
+      title="Upcoming Movies"
+      action={(movie) => {
+         return <AddToWatchListIcon movie={movie} />
+      }}
     />
-  );
+);
 };
 export default UpcomingMoviesPage;

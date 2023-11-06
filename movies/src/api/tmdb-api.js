@@ -79,12 +79,19 @@
 // const options = { method: 'GET', headers: { accept: 'application/json' } };
 
 export const getUpcomingMovies = () => {
-  return fetch(`https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1`)
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error(`Failed to fetch upcoming movies: ${res.status}`);
+  return fetch(
+      `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}`
+    ).then((response) => {
+      if (!response.ok) {
+        throw new Error(response.json().message);
       }
-      return res.json();
+      return response.json();
     })
-    .then((json) => json.results);
+    .catch((error) => {
+      throw error
+    });
 };
+
+
+
+
