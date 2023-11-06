@@ -8,7 +8,6 @@ function UpcomingMoviesListTemplate({ upcomingMovies, title, action }) {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
   const genreId = Number(genreFilter);
-  console.log("inside template ", upcomingMovies)
 
   let displayedMovies = upcomingMovies
     .filter((m) => {

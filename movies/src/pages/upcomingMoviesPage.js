@@ -16,7 +16,6 @@ const UpcomingMoviesPage = () => {
     return <h1>{error.message}</h1>
  }  
  const upcomingMovies = data.results;
- console.log("upcoming movies ", data.results);
 
  // Redundant, but necessary to avoid app crashing.
  const upcomingList = upcomingMovies.filter(m => m.upcomingList)
