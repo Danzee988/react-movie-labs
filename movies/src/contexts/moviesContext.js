@@ -6,9 +6,6 @@ const MoviesContextProvider = (props) => {
   const [favorites, setFavorites] = useState( [] );
   const [myReviews, setMyReviews] = useState( {} );
   const [watchList, setWatchList] = useState([]);
-  const [mustWatchList, setMustWatchList] = useState([]);
-
-
 
   const addToFavorites = (movie) => {
     let newFavorites = [];
@@ -25,12 +22,6 @@ const MoviesContextProvider = (props) => {
     setWatchList([...watchList, movie]);
     localStorage.setItem('watchList', JSON.stringify(watchList));
  };
-
- const addToMustWatchList = (movieId) => {
-  if (!mustWatchList.includes(movieId)) {
-    setMustWatchList((prevList) => [...prevList, movieId]);
-  }
-};
   
   // We will use this function in a later section
   const removeFromFavorites = (movie) => {
@@ -53,8 +44,6 @@ const MoviesContextProvider = (props) => {
         addReview,
         watchList,
         addToWatchList,
-        mustWatchList,
-        addToMustWatchList,
       }}
     >
       {props.children}
